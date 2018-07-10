@@ -17,7 +17,12 @@ class Application
     elsif req.path.match(/cart/)
       @@cart.each {|item| resp.write "#{item}\n"}
     elsif req.path.match(/add/)
-      
+      search_term = req.params["item"]
+      if @@items.include?(search_term)
+        @@cart << search_term
+      else
+        resp.write "#{search_term} is not one of our items"
+      end
     else
       resp.write "Path Not Found"
     end
